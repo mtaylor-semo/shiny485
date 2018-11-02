@@ -5,7 +5,12 @@ outputDir <- "485_responses"
 # Read the authorization token for dropbox.
 token <- readRDS("droptoken.rds")
 
-fieldsMandatory <- c("name", "favourite_pkg")
+# Define mandatory fields
+fieldsMandatory <- c("first_name", 
+                     "last_name", 
+                     "email",
+                     "git_user",
+                     "os_type")
 
 labelMandatory <- function(label) {
   tagList(label,
@@ -16,23 +21,19 @@ appCSS <-
   ".mandatory_star { color: red; }
 #error { color: red; }"
 
+
 fieldsAll <-
-  c("name",
-    "favourite_pkg",
-    "used_shiny",
-    "r_num_years",
+  c("first_name",
+    "last_name",
+    "email",
+    "git_user"
     "os_type")
-responsesDir <- file.path("responses")
+
+#responsesDir <- file.path("responses")
+
 epochTime <- function() {
   as.integer(Sys.time())
 }
-
-# loadData <- function() {
-#   files <- list.files(file.path(responsesDir), full.names = TRUE)
-#   data <- lapply(files, read.csv, stringsAsFactors = FALSE)
-#   data <- dplyr::bind_rows(data)
-#   data
-# }
 
 shinyApp(
   ui = fluidPage(
@@ -40,21 +41,19 @@ shinyApp(
     shinyjs::inlineCSS(appCSS),
     titlePanel("Mimicking a Google Form with a Shiny app"),
 
-#    DT::dataTableOutput("responsesTable"),
-
-#    downloadButton("downloadBtn", "Download responses"),
-
     div(
       id = "form",
       
-      textInput("name", labelMandatory("Name"), ""),
-      textInput("favourite_pkg", labelMandatory("Favourite R package")),
-      checkboxInput("used_shiny", "I've built a Shiny app in R before", FALSE),
-      sliderInput("r_num_years", "Number of years using R", 0, 25, 2, ticks = FALSE),
+      textInput("first_name", labelMandatory("First name"), ""),
+      textInput("last_name", labelMandatory("Last name"), ""),
+      textInput("email", labelMandatory("Email address"), ""),
+      textInput("git_user", labelMandatory("Git user name")),
+#      checkboxInput("used_shiny", "I've built a Shiny app in R before", FALSE),
+#      sliderInput("r_num_years", "Number of years using R", 0, 25, 2, ticks = FALSE),
       selectInput(
         "os_type",
-        "Operating system used most frequently",
-        c("",  "Windows", "Mac", "Linux")
+        "What computer operating system do you use?",
+        c("Mac",  "Windows", "Mac", "Linux")
       ),
       actionButton("submit", "Submit", class = "btn-primary"),
       shinyjs::hidden(span(id = "submit_msg", "Submitting..."),
