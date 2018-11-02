@@ -26,7 +26,7 @@ fieldsAll <-
   c("first_name",
     "last_name",
     "email",
-    "git_user"
+    "git_user",
     "os_type")
 
 #responsesDir <- file.path("responses")
@@ -39,14 +39,21 @@ shinyApp(
   ui = fluidPage(
     shinyjs::useShinyjs(),
     shinyjs::inlineCSS(appCSS),
-    titlePanel("Mimicking a Google Form with a Shiny app"),
+    titlePanel("BI 485 Student Information"),
 
     div(
       id = "form",
+      # form instructions
+      p("Please fill out this form to help me with some 'behind-the-scenes' administration."),
+#      p("You don't have to submit this form, but I would", em("really"), "appreciate it if you did."),
+      p("The fields marked with", span("*", style="color:red"), "are mandatory,
+        and the rest are optional but highly recommended."),
+      strong("Help us help you :)"),
+      shiny::hr(),
       
       textInput("first_name", labelMandatory("First name"), ""),
       textInput("last_name", labelMandatory("Last name"), ""),
-      textInput("email", labelMandatory("Email address"), ""),
+      textInput("email", labelMandatory("Preferred email"), ""),
       textInput("git_user", labelMandatory("Git user name")),
 #      checkboxInput("used_shiny", "I've built a Shiny app in R before", FALSE),
 #      sliderInput("r_num_years", "Number of years using R", 0, 25, 2, ticks = FALSE),
