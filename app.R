@@ -1,5 +1,11 @@
 library(rdrop2)
 
+## ------------------------------------------
+## Use one of these to validate email address
+## "/^\S+@\S+\.\S+$/" (no quotes)
+## -or-
+## "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$" (no quotes)
+
 outputDir <- "485_responses"
 
 # Read the authorization token for dropbox.
@@ -48,7 +54,7 @@ shinyApp(
 #      p("You don't have to submit this form, but I would", em("really"), "appreciate it if you did."),
       p("The fields marked with", span("*", style="color:red"), "are mandatory,
         and the rest are optional but highly recommended."),
-      strong("Help us help you :)"),
+#      strong("Help us help you :)"),
       shiny::hr(),
       
       textInput("first_name", labelMandatory("First name"), ""),
@@ -59,7 +65,7 @@ shinyApp(
 #      sliderInput("r_num_years", "Number of years using R", 0, 25, 2, ticks = FALSE),
       selectInput(
         "os_type",
-        "What computer operating system do you use?",
+        labelMandatory("What computer operating system do you use?"),
         c("Mac",  "Windows", "Mac", "Linux")
       ),
       actionButton("submit", "Submit", class = "btn-primary"),
@@ -97,20 +103,20 @@ shinyApp(
       data
     })
     
-    output$responsesTable <- DT::renderDataTable(
-      loadData(),
-      rownames = FALSE,
-      options = list(searching = FALSE, lengthChange = FALSE)
-    ) 
-    
-    output$downloadBtn <- downloadHandler(
-      filename = function() { 
-        sprintf("485_users_%s.csv", humanTime())
-      },
-      content = function(file) {
-        write.csv(loadData(), file, row.names = FALSE)
-      }
-    )
+    # output$responsesTable <- DT::renderDataTable(
+    #   loadData(),
+    #   rownames = FALSE,
+    #   options = list(searching = FALSE, lengthChange = FALSE)
+    # ) 
+    # 
+    # output$downloadBtn <- downloadHandler(
+    #   filename = function() { 
+    #     sprintf("485_users_%s.csv", humanTime())
+    #   },
+    #   content = function(file) {
+    #     write.csv(loadData(), file, row.names = FALSE)
+    #   }
+    # )
     
     saveData <- function(data) {
       # Create a unique file name
