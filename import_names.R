@@ -1,6 +1,8 @@
 ## Import student names from dropbox folder into single csv.
 ## Create GitHub directories for those students
 
+## THe shiny URL for students to enter name is
+## https://semo-gabd.shinyapps.io/485info/
 
 # load packages -----------------------------------------------------------
 
@@ -16,6 +18,13 @@ path_dropbox <- "~/dropbox/"
 path_csv_files <- paste0(path_dropbox, outputDir)
 github_new_repo_path <- "/orgs/SEMO-GABD/repos"
 github_del_repo_path <- "/repos/SEMO-GABD/"
+
+# Git API vars
+org <- "SEMO-GABD"
+owner <- "SEMO-GABD"
+username <- NULL
+name <-  NULL
+team_ident <- 0L # Team ID
 
 # functions ---------------------------------------------------------------
 
